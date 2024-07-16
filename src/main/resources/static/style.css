@@ -1,0 +1,443 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgba(236, 236, 236, 0.697);
+}
+
+header{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(9, 9, 9, 0.7);
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    order: 2;
+}
+
+table {
+  border-collapse: collapse;
+  box-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
+  width: 100%;
+  margin: auto;
+  margin-bottom: 25px;
+}
+
+table td {
+  border: 1px solid rgba(9, 9, 9, 0.7);
+  padding: 8px;
+}
+
+table th{
+    border: none;
+    padding: 8px;
+}
+
+table form {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+}
+
+table th {
+    color: silver;
+    background-color: rgba(9, 9, 9, 0.7);
+}
+
+table tr:hover {
+    background-color: rgba(9, 9, 9, 0.2);
+}
+
+hr{
+    height: 5px;
+    background: rgba(9, 9, 9, 0.7);
+    box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.8);
+    margin-bottom: 15px;
+}
+
+li{
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+#logo{
+    width: 70%;
+    height: 70%;
+    order: 1;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#logo-login{
+    width: 70%;
+    height: 70%;
+}
+
+#logout-form {
+     display: inline;
+     margin: 15px;
+     padding: 0;
+     border: none;
+     background: none;
+     box-shadow: none;
+}
+
+#logout-form button {
+    color: silver;
+    font-size: 1.05rem;
+}
+
+#logout-form button:hover {
+     text-decoration: underline;
+     cursor: pointer;
+}
+
+#login{
+    color: silver;
+}
+
+.empty{
+    order: 3
+}
+
+.user{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    order: 0;
+}
+
+.user img{
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.table-container{
+    overflow-x: auto;
+}
+
+.end-date_container{
+    display: flex;
+    flex-direction: row;
+}
+
+.insured-search-bar{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 800px;
+    justify-content: center;
+}
+
+.insured-search-bar form{
+    display: flex;
+    max-width: 400px;
+    margin: 0;
+    box-shadow: none;
+    padding 0;
+}
+
+.insured-search-bar form button{
+    height: 33px;
+}
+
+#end-date-checkbox_label{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#user-photo{
+    width: 250px;
+}
+
+#td_buttons{
+    text-align: center;
+    width: 25%;
+}
+
+#td_buttons form {
+    display: inline-block;
+    vertical-align: center;
+    margin: 10px;
+}
+
+#insureds-table_detail {
+    width: 100%;
+    border: none;
+    margin: auto;
+    box-shadow: none;
+}
+
+#insureds-table_detail td,
+#insureds-table_detail tr,
+#insureds-table_detail th{
+    display: block;
+    margin: 8px;
+    border: none;
+    background-color: transparent;
+    color: rgb(9, 9, 9);
+}
+
+#insurances-container{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+
+#create-insurance_btn{
+    box-shadow: none;
+}
+
+.insurance-button_table{
+    border: none;
+    margin: auto;
+    margin-bottom: 10px;
+    box-shadow: none;
+}
+
+.insurance-button_table th{
+    background-color: transparent;
+    color: rgb(9,9,9);
+    border: none;
+}
+
+.insurance-button_table td{
+    border: none;
+}
+
+.insurance-button_table tr:hover{
+    background-color: transparent;
+}
+
+.insurance-button {
+    width: 70px;
+    height: 70px;
+    transition: transform 0.3s ease;
+}
+
+.insurance-button:hover {
+    transform: scale(1.2);
+}
+
+.edit_button{
+    padding: 5px 10px;
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+    color: silver;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+
+.edit_button:hover{
+    background-color: rgba(0, 0, 0, 0.6);
+    color: silver;
+    box-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
+}
+
+.delete_button{
+    padding: 5px 10px;
+    width: 100%;
+    background-color: rgb(100, 0, 0);
+    color: silver;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+
+.delete_button:hover{
+    background-color: rgba(100, 0, 0, 0.6);
+    color: silver;
+    box-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.clear-float {
+    clear: both;
+}
+
+a{
+    color: orangered;
+    text-decoration: none;
+    text-align: center;
+    margin: 10px;
+}
+
+p{
+    padding: 10px;
+}
+
+h1,h2{
+    text-align: center;
+    margin: 15px;
+}
+
+.button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(0, 0, 0);
+    color: silver;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 300px;
+    transition: 0.3s;
+    box-shadow: 0 0 5px rgba(192, 192, 192, 0.5);
+}
+
+.button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: silver;
+    box-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+header a:hover{
+    text-decoration: none;
+}
+
+.user a:hover{
+    text-decoration: underline;
+}
+
+footer{
+    text-align: center;
+    padding-bottom: 8px;
+}
+
+form {
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+}
+
+input, select{
+    width: calc(100% - 10px);
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 20px 10px;
+    background-color: rgb(0, 0, 0);
+    color: silver;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+input[type="submit"]:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: silver;
+}
+
+@media (min-width: 600px) {
+    nav {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    header{
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    #logo{
+        width: 20%;
+        height: 20%;
+        margin: 0;
+    }
+
+    .user{
+        display: flex;
+        order: 4;
+        align-items: center;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: auto;
+        padding-right: 20px;
+        padding-top: 15px;
+    }
+
+    .button {
+        width: auto;
+        max-width: none;
+    }
+
+    .float-left{
+        float: left;
+    }
+
+    #insureds-table_detail{
+        width: auto;
+        height: 300px;
+        align-items: center;
+    }
+    #user-photo{
+        width: auto;
+    }
+
+    #insurances-container{
+        flex-direction: row;
+    }
+
+    .insurance-button{
+        width: 130px;
+        height: 130px;
+    }
+
+    .insurance-button_table{
+        margin: 20px;
+    }
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head th:replace="~{/fragments/layout.html :: head}"></head>
+
+<body>
+
+<header th:replace="~{/fragments/layout.html :: header}"></header>
+
+<div class="container">
+
+    <h1>Pechy32 Insurance Application</h1>
+    <hr>
+
+    <p>
+        Tato aplikace vznikla jako samostatný závěrečný projekt v rámci rekvalifikačního kurzu <strong>programátor WWW aplikací</strong>
+        na<a href="https://www.itnetwork.cz">itnetwork.cz</a>
+    </p>
+
+    <p>
+        Aplikace simuluje zjednodušenou správu pojišťovny a slouží pouze pro prezentační účely.
+        Data v ní evidovaná jsou zcela fiktivní a nereprezentují skutečné osoby ani pojištění.
+    </p>
+
+    <h2 class="align-left">Highlights:</h2>
+    <ul class="align-left">
+        <li>Aplikace obsahuje kompletní správu (CRUD) pojištěných včetně jejich pojištění</li>
+        <li>Všechna data aplikace jsou uložena v databázi MySQL</li>
+        <li>Logika aplikace (beckendová část) ja napsaná v Javě</li>
+        <li>Aplikace využívá framework Spring Boot Starter Web a šablonovací systém Thymeleaf</li>
+        <li>Aplikace je zabezpečena pomocí Spring Security a rozlišuje uživatele, administrátory a anonymní návštěvníky</li>
+        <li>Aplikace generuje statistiku na základě aktuálního stavu databáze</li>
+        <li>Aplikace je psaná tzv. 'mobile-first' přístupem (upřednosňuje zobrazení na mobilním zařízení)</li>
+        <li style="list-style:none"><br></li>
+        <li>Autor: Tomáš Pecháček</li>
+    </ul>
+
+</div>
+
+<footer th:replace="~{/fragments/layout.html :: footer}"></footer>
+
+</body>
+</html>

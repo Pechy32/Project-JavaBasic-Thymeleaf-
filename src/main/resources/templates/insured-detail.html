@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{/fragments/layout.html :: head}"></head>
+
+<body>
+
+<header th:replace="~{/fragments/layout.html :: header}"></header>
+
+<div class="container">
+
+    <h2 th:text="'Pojištěný č. ' + ${insured.id}" class="align-center"></h2>
+    <hr>
+
+    <!--src atribut uložený v proměnné-->
+    <img th:src="${insured.defaultPhotoUrl}" class="float-left" alt="user-photo" id="user-photo">
+
+    <table id="insureds-table_detail" class="align-center">
+        <thead>
+            <tr>
+                <th><h2 th:text="${insured.name + ' ' + insured.surname}"></h2></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td th:utext="${insured.address.street + ' ' + insured.address.houseNumber + ',<br>' + insured.address.city} + ', ' + ${insured.address.postalCode}"></td>
+                <td th:text="'Tel: ' + ${insured.phone}"></td>
+                <td th:text="'Email: ' + ${insured.email}"></td>
+                <td>
+                    <!-- Tlačítko pro editaci záznamu -->
+                    <form th:action="@{/insurance-app/insureds/edit-insured}" method="get">
+                        <input type="hidden" name="insured_id" th:value="${insured.id}"/>
+                        <button type="submit" class="edit_button">Editovat</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!--ukončení obtékání textu-->
+    <div class="clear-float"></div>
+
+    <h2>Sjednaná pojištění: </h2>
+
+    <div class="table-container">
+    <table id="insuranceTable">
+        <thead>
+            <th>Typ pojištění</th>
+            <th>Číslo smlouvy</th>
+            <th>Platné od</th>
+            <th>Platné do</th>
+            <th>Částka (Kč)</th>
+            <th>Akce</th>
+        </thead>
+
+        <tbody>
+        <tr th:each="insurance : ${insurancesById}">
+            <td th:text="${insurancesService.translateInsuranceName(insurance.name)}"></td>
+            <td th:text="${insurance.policyNumber}"></td>
+            <td th:text="${insurancesService.formatDate(insurance.startDate)}"></td>
+            <td>
+                <span th:if="${insurance.endDate != null}" th:text="${insurancesService.formatDate(insurance.endDate)}"></span>
+                <span th:if="${insurance.endDate == null}">Neurčito</span>
+            </td>
+            <td th:text="${insurance.amount}"></td>
+            <td id="td_buttons" class="align-center">
+                <!-- Tlačítko pro editaci záznamu -->
+                <form th:action="@{/insurance-app/insureds/edit-insurance}" method="get">
+                    <input type="hidden" name="insurance_id" th:value="${insurance.id}"/>
+                    <input type="hidden" name="insuredName" th:value="${insured.name + ' ' + insured.surname}">
+                    <button type="submit" class="edit_button">Editovat</button>
+                </form>
+
+                <!-- Tlačítko pro odstranění záznamu -->
+                <form th:action="@{/insurance-app/insureds/delete-insurance}" method="get" onsubmit="return confirmDelete()">
+                    <!--pop-up dialog o potvrzení odstranění záznamu-->
+                    <script th:inline="javascript">
+                        function confirmDelete() {
+                            var confirmationMessage = "Přejete si smazat pojištění?";
+                            var confirmed = window.confirm(confirmationMessage);
+                            return confirmed;
+                        }
+                    </script>
+                    <input type="hidden" name="insured_id" th:value="${insured.id}">
+                    <input type="hidden" name="insurance_id" th:value="${insurance.id}" />
+                    <button type="submit" class="delete_button">Odstranit</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <form th:action="@{/insurance-app/insureds/add-insurance}" method="get" id="create-insurance_btn">
+        <input type="hidden" name="insured_id" th:value="${insured.id}"/>
+        <button type="submit" class="button">Vytvoř pojištění</button>
+    </form>
+
+</div>
+
+<div sec:authentication="authorities" id="authorities" style="display: none"></div>
+
+<footer>
+    &copyPechy32 2024
+</footer>
+
+<!--Script označí záznamy o pojištěních blížící se konci nebo po splatnosti
+a zároveň případně skryje editační tlačítka pokud uživatel není admin-->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var table = document.getElementById('insuranceTable'); // Použití ID tabulky
+        var rows = table.querySelectorAll('tbody tr');
+
+        rows.forEach(function(row) {
+            var endDateCell = row.querySelector('td:nth-child(4) span');
+            if (endDateCell) {
+                var endDateText = endDateCell.innerText;
+                if (endDateText !== 'Neurčito') {
+                    var endDateParts = endDateText.split(' ');
+                    var endDateDay = parseInt(endDateParts[0]); // Den
+                    var endDateMonth = parseInt(endDateParts[1]); // Měsíc
+                    var endDateYear = parseInt(endDateParts[2]); // Rok
+
+                    var endDate = new Date(endDateYear, endDateMonth - 1, endDateDay); // Měsíce v JavaScriptu jsou indexovány od 0
+
+                    var currentDate = new Date();
+                    var twoMonthsLater = new Date();
+                    twoMonthsLater.setMonth(twoMonthsLater.getMonth() + 2);
+
+                    if (endDate < currentDate) {
+                        endDateCell.style.color = 'red'; // Pokud je datum po splatnosti, obarví na červeno
+                    } else if (endDate < twoMonthsLater) {
+                        endDateCell.style.color = '#cfc725'; // Pokud zbývá méně než 2 měsíce do konce splatnosti, obarví na žluto
+                    }
+                }
+            }
+        });
+
+        //tato část skryje tlačítka dle uživatelské role
+
+        var userRoleElement = document.getElementById("authorities");
+        if (userRoleElement) {
+        var userRole = userRoleElement.innerText.trim();
+        if (userRole !== "[ROLE_ADMIN]") {
+            var editButtons = document.getElementsByClassName("edit_button");
+
+            for (var i = 0; i < editButtons.length; i++) {
+            editButtons[i].style.display = "none";
+            }
+
+            var deleteButtons = document.getElementsByClassName("delete_button");
+            for (var j = 0; j < deleteButtons.length; j++) {
+            deleteButtons[j].style.display = "none";
+            }
+
+            var createInsuranceButton = document.getElementById("create-insurance_btn");
+            createInsuranceButton.style.display = "none";
+
+        }
+    } else {
+        console.error("Element s ID 'authorities' nenalezen.");
+    }
+});
+</script>
+</body>
+</html>

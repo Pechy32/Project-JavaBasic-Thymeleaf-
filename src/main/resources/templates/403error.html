@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pojištění Pechy32 - přístup zamítnut</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<header>
+    <img id="logo" th:src="@{/pechy32_logo.png}" alt="pechy32 insurance-application logo">
+    <nav>
+        <a class="button" th:href="@{/insurance-app/insureds}">Pojištěnci</a>
+        <a class="button" th:href="@{/insurance-app/insurances}">Pojištění</a>
+        <a class="button" th:href="@{/insurance-app/statistics}">Statistiky</a>
+        <a class="button" th:href="@{/insurance-app/about}">O&nbspaplikaci</a>
+    </nav>
+
+    <div class="empty"></div>
+
+    <div class="user">
+        <img th:src="@{/man_siluete.png}">
+        <span id="name" sec:authentication="name"></span>
+
+        <a id="login" th:href="@{/insurance-app/login}">Přihlásit se</a>
+
+        <form id="logout-form"
+              th:action="@{/logout}"
+              method="post">
+            <button type="submit" style="border: none; background: none; padding: 0; margin: 0;">Odhlásit</button>
+        </form>
+
+        <script th:inline="javascript">
+            var username = document.getElementById("name").innerText.trim();
+            if (username === "anonymousUser") {
+                document.getElementById("logout-form").style.display = "none";
+            } else {
+                document.getElementById("login").style.display = "none";
+            }
+        </script>
+    </div>
+
+</header>
+
+<div class="container">
+    <h1>Přístup zamítnut</h1>
+    <hr>
+    <p>Pro zozbrazení následující stránky nemáte dostatečná oprávnění</p>
+
+    <a href="javascript:history.back()">Zpět</a>
+    <a th:href="@{/insurance-app/login}">Přihlásit se</a>
+</div>
+
+<footer>
+    &copyPechy32 2024
+</footer>
+
+</body>
+</html>

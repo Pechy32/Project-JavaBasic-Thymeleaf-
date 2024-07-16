@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{/fragments/layout.html :: head}"></head>
+
+<body>
+
+<header th:replace="~{/fragments/layout.html :: header}"></header>
+
+
+<div class="container">
+    <h1>Pojištění</h1>
+    <hr>
+    <div id="insurances-container">
+        <table class="insurance-button_table">
+            <thead>
+            <tr>
+                <th>Majetek</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <a th:href="@{'/insurance-app/insurances/property'}">
+                        <img class="insurance-button" th:src="@{/house_btn.png}" alt="house">
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="insurance-button_table">
+            <thead>
+            <tr>
+                <th>Zdraví</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <a th:href="@{'/insurance-app/insurances/health'}">
+                        <img class="insurance-button" th:src="@{/hearth_btn.png}" alt="hearth">
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="insurance-button_table">
+            <thead>
+            <tr>
+                <th>Cestování</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <a th:href="@{'/insurance-app/insurances/travel'}">
+                        <img class="insurance-button" th:src="@{/car_btn.png}" alt="road">
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <a th:href="@{'/insurance-app/insurances/all'}" style="font-size: 1.2rem">Zobrazit všechna pojištění</a>
+</div>
+
+<footer>
+    &copyPechy32 2024
+</footer>
+
+</body>
+</html>

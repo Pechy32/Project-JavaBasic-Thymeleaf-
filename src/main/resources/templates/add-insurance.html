@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{/fragments/layout.html :: head}"></head>
+
+<body>
+
+<header th:replace="~{/fragments/layout.html :: header}"></header>
+
+<div class="container">
+    <h2>Vytvoření pojištění:</h2>
+    <h3 th:text="'(Pojištěný č. ' + ${insured_id} + ')'"></h3>
+    <form action="/insurance-app/insureds/add-insurance" method="post">
+
+        <label for="insurance-name">Typ pojištění:</label>
+        <select id="insurance-name" name="insurance-name" th:field="${insuranceDTO.name}">
+            <option value="health">Pojištění zdraví</option>
+            <option value="property">Pojištění majetku</option>
+            <option value="travel">Cestovní pojištění</option>
+        </select>
+
+        <label for="start-date">Datum od:</label>
+        <input type="date" id="start-date" name="start-date" required th:field="${insuranceDTO.startDate}">
+
+        <label for="end-date">Datum do:</label>
+        <div class="end-date_container">
+            <input type="date" id="end-date" name="end-date" required th:field="${insuranceDTO.endDate}">
+            <label for="end-date-checkbox">Neurčito:
+                <input type="checkbox" id="end-date-checkbox" onchange="toggleEndDateField()">
+            </label>
+        </div>
+        <script>
+            function toggleEndDateField() {
+                var endDateField = document.getElementById("end-date");
+                var endDateCheckbox = document.getElementById("end-date-checkbox");
+                endDateField.disabled = endDateCheckbox.checked;
+                if (endDateCheckbox.checked) {
+                    endDateField.value = ""; // vynuluje hodnotu end-date v případě zaškrtnutí checkboxu
+                }
+            }
+        </script>
+
+        <label for="amount">Částka:</label>
+        <input type="number" id="amount" name="amount" required th:field="${insuranceDTO.amount}">
+
+        <input type="hidden" name="insured_id" th:value="${insured_id}">
+
+        <input type="submit" value="Vytvoř pojištění">
+    </form>
+</div>
+
+<footer>
+    &copyPechy32 2024
+</footer>
+
+</body>
+</html>

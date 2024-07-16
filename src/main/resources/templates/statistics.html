@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{/fragments/layout.html :: head}"></head>
+
+<body>
+
+<header th:replace="~{/fragments/layout.html :: header}"></header>
+
+<div class="container">
+
+  <h1>Statistiky</h1>
+  <hr>
+
+  <h2 class="align-left">Statistika pojištěných</h2>
+  <ul class="align-left">
+    <li>Pojištěných evidováno: <span th:text="${insuredsStatistics.count}"></span></li>
+    <li>Počet žen: <span th:text="${insuredsStatistics.womenCount}"></span></li>
+    <li>Počet můžů: <span th:text="${insuredsStatistics.manCount}"></span></li>
+    <li>Průměrný věk pojištěných: <span th:text="${insuredsStatistics.averageAge}"></span></li>
+  </ul>
+
+  <h2 class="align-left">Statistika pojištění</h2>
+  <ul class="align-left">
+    <li>Počet sjednaných pojištění: <span th:text="${insurancesStatistics.totalCount}"></span></li>
+    <li>Pojištění zdraví: <span th:text="${insurancesStatistics.healthCount}"></span></li>
+    <li>Pojištění majetku: <span th:text="${insurancesStatistics.propertyCount}"></span></li>
+    <li>Cestovní pojištění: <span th:text="${insurancesStatistics.travelCount}"></span></li>
+    <li>Průměrná pojistná částka: <span th:text="${insurancesStatistics.averageSum}"></span></li>
+  </ul>
+
+  <h2 class="align-left">Statistika uživatelů</h2>
+  <ul class="align-left">
+    <li>Celkový počet uživatelských účtů: <span th:text="${usersStatistics.accountsCount}"></span></li>
+  </ul>
+
+</div>
+
+<footer>
+  &copyPechy32 2024
+</footer>
+
+</body>
+</html>

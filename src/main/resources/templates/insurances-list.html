@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{/fragments/layout.html :: head}"></head>
+
+<body>
+
+<header th:replace="~{/fragments/layout.html :: header}"></header>
+
+<div class="container">
+
+  <h1>Pojištění</h1>
+  <hr>
+
+  <div id="insurances-container">
+    <table class="insurance-button_table">
+      <thead>
+      <tr>
+        <th>Majetek</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>
+          <a th:href="@{'/insurance-app/insurances/property'}">
+            <img class="insurance-button" th:src="@{/house_btn.png}" alt="house">
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <table class="insurance-button_table">
+      <thead>
+      <tr>
+        <th>Zdraví</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>
+          <a th:href="@{'/insurance-app/insurances/health'}">
+            <img class="insurance-button" th:src="@{/hearth_btn.png}" alt="hearth">
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <table class="insurance-button_table">
+      <thead>
+      <tr>
+        <th>Cestování</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>
+          <a th:href="@{'/insurance-app/insurances/travel'}">
+            <img class="insurance-button" th:src="@{/car_btn.png}" alt="road">
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h1 th:text="${name}"></h1>
+  <div class="table-container">
+  <table>
+    <thead>
+      <th>ID pojištěného</th>
+      <th>Typ pojištění</th>
+      <th>Číslo smlouvy</th>
+      <th>Platné do</th>
+      <th>Částka (Kč)</th>
+    </thead>
+    <tbody>
+      <tr th:each="insurance : ${insurancesList}">
+        <td><a th:text="${insurance.insuredID}" th:href="@{/insurance-app/insureds/detail(insured_id=${insurance.insuredID})}" id="insured_id"></a></td>
+        <td th:text="${insurancesService.translateInsuranceName(insurance.name)}"></td>
+        <td th:text="${insurance.policyNumber}"></td>
+        <td>
+          <span th:if="${insurance.endDate != null}" th:text="${insurancesService.formatDate(insurance.endDate)}"></span>
+          <span th:if="${insurance.endDate == null}">Neurčito</span>
+        </td>
+        <td th:text="${insurance.amount}"></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <a th:href="@{'/insurance-app/insurances/all'}">Zobrazit všechna pojištění</a>
+
+</div>
+
+<footer>
+  &copyPechy32 2024
+</footer>
+
+<!--Script označí záznamy o pojištěních blížící se konci nebo po splatnosti-->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var table = document.querySelector('.table-container table'); // Oprava selektoru třídy kontejneru
+      var rows = table.querySelectorAll('tbody tr');
+
+      rows.forEach(function(row) {
+          var endDateCell = row.querySelector('td:nth-child(4) span'); // Oprava selektoru pro buňky tabulky
+          if (endDateCell) {
+              var endDateText = endDateCell.innerText;
+              if (endDateText !== 'Neurčito') {
+                  var endDateParts = endDateText.split(' ');
+                  var endDateDay = parseInt(endDateParts[0]); // Den
+                  var endDateMonth = parseInt(endDateParts[1]); // Měsíc
+                  var endDateYear = parseInt(endDateParts[2]); // Rok
+
+                  var endDate = new Date(endDateYear, endDateMonth - 1, endDateDay);
+
+                  var currentDate = new Date();
+                  var twoMonthsLater = new Date();
+                  twoMonthsLater.setMonth(twoMonthsLater.getMonth() + 2);
+
+                  if (endDate < currentDate) {
+                      endDateCell.style.color = 'red'; // Pokud je datum po splatnosti, obarví na červeno
+                  } else if (endDate < twoMonthsLater) {
+                      endDateCell.style.color = '#cfc725'; // Pokud zbývá méně než 2 měsíce do konce splatnosti, obarví na žluto
+                  }
+              }
+          }
+      });
+  });
+</script>
+
+</body>
+</html>

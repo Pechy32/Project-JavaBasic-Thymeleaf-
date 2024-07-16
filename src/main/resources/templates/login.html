@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pojištění Pechy32 - login</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<div class="container">
+    <img id="logo-login" th:src="@{/pechy32_logo.png}" alt="pechy32 insurance-application logo">
+
+    <h3>Pro testovací účely: </h3>
+    <p><strong>admin - admin</strong> -> přihlášení jako administrátor<br>
+        <strong>orechv - orechv</strong> -> přihlášení jako jeden z uživatelů (Ořech Vlašský :-))
+    </p>
+
+    <div th:if="${param.error}">
+        Neplatné jméno nebo heslo.
+    </div>
+    <div th:if="${param.logout}">
+        Odhlášení proběhlo úspěšně.
+    </div>
+
+    <form th:action="@{/insurance-app/login}" method="post">
+        <div><label>Jméno:<input type="text" name="username"/> </label></div>
+        <div><label>Heslo:<input type="password" name="password"/> </label></div>
+        <div><input type="submit" value="Přihlásit se"/></div>
+    </form>
+
+    <a class="align-center" th:href="@{/insurance-app/about}">Pokračovat bez přihlášení</a>
+
+</div>
+
+<footer>
+    &copyPechy32 2024
+</footer>
+
+</body>
+</html>

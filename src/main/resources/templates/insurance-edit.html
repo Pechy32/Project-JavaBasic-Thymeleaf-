@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{/fragments/layout.html :: head}"></head>
+
+<body>
+
+<header th:replace="~{/fragments/layout.html :: header}"></header>
+
+<div class="container">
+    <h2 th:text="'Editace pojištění č. ' + ${insurance.id}"></h2>
+    <h3 th:text="'(pojištěný č. ' + ${insurance.insuredID} + ' - ' + ${insuredName} + ')'"></h3>
+    <form action="/insurance-app/insureds/edit-insurance" method="post">
+
+        <!--Skryté atributy-->
+        <input type="hidden" name="insurance_id" th:value="${insurance.id}">
+        <input type="hidden" name="insured_id" th:value="${insurance.insuredID}">
+
+        <label for="name">Typ pojištění:</label>
+        <input id="name" name="name" th:value="${name}" readonly>
+
+        <label for="startDate">Datum od:</label>
+        <input type="date" id="startDate" name="starDate" th:value="${insurance.startDate}" readonly>
+
+        <label>Datum do:</label>
+        <div class="end-date_container">
+            <input id="endDate" name="endDate" required th:value="${insurance.endDate}">
+            <label for="end-date-checkbox">Neurčito:
+                <input type="checkbox" id="end-date-checkbox" th:checked="${insurance.endDate == null}" onchange="toggleEndDateField()">
+            </label>
+        </div>
+
+        <script>
+            function toggleEndDateField() {
+                var endDateField = document.getElementById("endDate");
+                var endDateCheckbox = document.getElementById("end-date-checkbox");
+
+                if (endDateCheckbox.checked) {
+                    endDateField.disabled = true; // Pole je zakázáno (disabled), pokud je zaškrtnutý checkbox
+                    endDateField.type = "text"; // Nastaví datový typ na text
+                    endDateField.value = "Neurčito"; // Nastaví hodnotu na "Neurčito", když je zaškrtnuto
+                } else {
+                    endDateField.disabled = false; // Povolit pole, pokud checkbox není zaškrtnutý
+                    endDateField.type = "date";//Nastaví datový typ na date
+                }
+            }
+
+            window.onload = function(){
+                toggleEndDateField();
+            }
+        </script>
+
+        <label for="amount">Částka:</label>
+        <input type="number" id="amount" name="amount" required th:value="${insurance.amount}">
+
+        <input type="submit" value="Uložit">
+    </form>
+</div>
+
+<footer>
+    &copyPechy32 2024
+</footer>
+
+</body>
+</html>

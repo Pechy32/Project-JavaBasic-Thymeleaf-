@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{/fragments/layout.html :: head}"></head>
+
+<body>
+
+<header th:replace="~{/fragments/layout.html :: header}"></header>
+
+<div class="insured-search-bar">
+    <form method="get" th:action="@{/insurance-app/insureds/search-insured}">
+        <input type="text" id="insured-search-input" name="insured-search-input" placeholder="Jméno pojištěnce(ů)">
+        <button type="submit">Vyhledat</button>
+    </form>
+</div>
+
+<div class="container">
+
+    <table>
+        <thead>
+        <tr>
+            <th class="align-left">Jméno</th>
+            <th class="align-left">Bydliště</th>
+            <th class="align-center">Akce</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Iterace přes seznam všech pojištěnců -->
+        <tr th:each="insured : ${allInsureds}">
+            <!-- Jméno a příjmení pojištěnce -->
+            <td th:text="${insured.name + ' ' + insured.surname}" class="align-left"></td>
+            <!-- Adresa pojištěnce s HTML značkou <br> -->
+            <td th:utext="${insured.address.street + ' ' + insured.address.houseNumber + ',<br>' + insured.address.city}" class="align-left"></td>
+            <td id="td_buttons" class="align-center">
+
+                <!-- Tlačítko pro editaci záznamu -->
+                <form th:action="@{/insurance-app/insureds/detail}" method="get">
+                    <input type="hidden" name="insured_id" th:value="${insured.id}"/>
+                    <button type="submit" class="edit_button">Editovat</button>
+                </form>
+
+                <!-- Tlačítko pro odstranění záznamu -->
+                <form th:action="@{/insurance-app/insureds/delete-insured}" method="get" onsubmit="return confirmDelete()">
+
+                    <!--pop-up dialog o potvrzení odstranění záznamu-->
+                    <script th:inline="javascript">
+                        function confirmDelete() {
+                            var confirmationMessage = "Přejete si smazat pojištěného včetně všech jeho pojištění?";
+                            var confirmed = window.confirm(confirmationMessage);
+                            return confirmed;
+                        }
+                    </script>
+
+                    <input type="hidden" name="insured_id" th:value="${insured.id}" />
+                    <button type="submit" class="delete_button">Odstranit</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="button" th:href="@{/insurance-app/insureds/add-insured}">Vytvoř pojištěnce</a>
+</div>
+
+
+<footer>
+    &copyPechy32 2024
+</footer>
+
+</body>
+</html>
